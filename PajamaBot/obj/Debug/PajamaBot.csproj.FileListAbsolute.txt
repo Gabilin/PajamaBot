@@ -18,3 +18,28 @@ c:\users\ava\documents\visual studio 2015\Projects\PajamaBot\PajamaBot\bin\Syste
 c:\users\ava\documents\visual studio 2015\Projects\PajamaBot\PajamaBot\obj\Debug\PajamaBot.csprojResolveAssemblyReference.cache
 c:\users\ava\documents\visual studio 2015\Projects\PajamaBot\PajamaBot\obj\Debug\PajamaBot.dll
 c:\users\ava\documents\visual studio 2015\Projects\PajamaBot\PajamaBot\obj\Debug\PajamaBot.pdb
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\PajamaBot.dll.config
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\PajamaBot.dll
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\PajamaBot.pdb
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\Microsoft.Bot.Connector.dll
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\Microsoft.Bot.Connector.Utilities.dll
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\Microsoft.Rest.ClientRuntime.dll
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\Microsoft.WindowsAzure.Configuration.dll
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\Newtonsoft.Json.dll
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\System.Net.Http.Formatting.dll
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\System.Web.Http.dll
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\System.Web.Http.WebHost.dll
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\Microsoft.Rest.ClientRuntime.xml
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\Microsoft.WindowsAzure.Configuration.xml
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\Newtonsoft.Json.xml
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\System.Net.Http.Formatting.xml
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\System.Web.Http.xml
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\System.Web.Http.WebHost.xml
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\obj\Debug\PajamaBot.csprojResolveAssemblyReference.cache
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\obj\Debug\PajamaBot.dll
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\obj\Debug\PajamaBot.pdb
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\Autofac.dll
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\Chronic.dll
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\Microsoft.Bot.Builder.dll
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\Autofac.xml
+C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\Microsoft.Bot.Builder.xml
