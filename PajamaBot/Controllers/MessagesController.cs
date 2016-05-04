@@ -28,30 +28,7 @@ namespace PajamaBot
             if (message.Type == "Message")
             {
                 // return our reply to the user
-                var joke = Chain
-                .PostToChain()
-                .Select(m => m.Text)
-                .Switch
-                (
-                    Chain.Case
-                    (
-                        new Regex("^chicken"),
-                        (context, text) =>
-                            Chain
-                            .Return("why did the chicken cross the road?")
-                            .PostToUser()
-                            .WaitToBot()
-                            .Select(ignoreUser => "to get to the other side")
-                    ),
-                    Chain.Default<string, IDialog<string>>(
-                        (context, text) =>
-                            Chain
-                            .Return("why don't you like chicken jokes?")
-                    )
-                )
-                .Unwrap()
-                .PostToUser().
-                Loop();
+                
                 return await Conversation.SendAsync(message, MakeRootDialog);
             }
             else
@@ -123,9 +100,34 @@ namespace PajamaBot
             //}
         }
 
-        internal static IDialog<PjMenu> MakeRootDialog()
+        internal static IDialog<string> MakeRootDialog()
         {
-            return Chain.From(() => FormDialog.FromForm(PjMenu.BuildForm));
+            IDialog<string> joke = Chain
+                .PostToChain()
+                .Select(m => m.Text)
+                .Switch
+                (
+                    Chain.Case
+                    (
+                        new Regex("^chicken"),
+                        (context, text) =>
+                            Chain
+                            .Return("why did the chicken cross the road?")
+                            .PostToUser()
+                            .WaitToBot()
+                            .Select(ignoreUser => "to get to the other side")
+                    ),
+                    Chain.Default<string, IDialog<string>>(
+                        (context, text) =>
+                            Chain
+                            .Return("why don't you like chicken jokes?")
+                    )
+                )
+                .Unwrap()
+                .PostToUser().
+                Loop();
+            return joke;
+            //return Chain.From(() => FormDialog.FromForm(PjMenu.BuildForm));
         }
 
         private Message HandleSystemMessage(Message message)
