@@ -10,6 +10,9 @@ using Microsoft.Bot.Connector.Utilities;
 using Newtonsoft.Json;
 using Microsoft.Bot.Builder.Dialogs;
 using PajamaBot.Controllers;
+using System.Collections.Generic;
+using Microsoft.Bot.Builder.FormFlow;
+using System.Text.RegularExpressions;
 
 namespace PajamaBot
 {
@@ -25,7 +28,31 @@ namespace PajamaBot
             if (message.Type == "Message")
             {
                 // return our reply to the user
-                return await Conversation.SendAsync(message, () => new SimpleAlarmDialog());
+                var joke = Chain
+                .PostToChain()
+                .Select(m => m.Text)
+                .Switch
+                (
+                    Chain.Case
+                    (
+                        new Regex("^chicken"),
+                        (context, text) =>
+                            Chain
+                            .Return("why did the chicken cross the road?")
+                            .PostToUser()
+                            .WaitToBot()
+                            .Select(ignoreUser => "to get to the other side")
+                    ),
+                    Chain.Default<string, IDialog<string>>(
+                        (context, text) =>
+                            Chain
+                            .Return("why don't you like chicken jokes?")
+                    )
+                )
+                .Unwrap()
+                .PostToUser().
+                Loop();
+                return await Conversation.SendAsync(message, MakeRootDialog);
             }
             else
             {
@@ -96,6 +123,11 @@ namespace PajamaBot
             //}
         }
 
+        internal static IDialog<PjMenu> MakeRootDialog()
+        {
+            return Chain.From(() => FormDialog.FromForm(PjMenu.BuildForm));
+        }
+
         private Message HandleSystemMessage(Message message)
         {
             if (message.Type == "Ping")
@@ -130,6 +162,81 @@ namespace PajamaBot
             }
 
             return null;
+        }
+    }
+
+    public enum PjMOptions
+    {
+        CreateProject, ProjectActions, ViewProjectInformation, ProjectStatistic
+    };
+    public enum ProjectOptions { SixInch, FootLong };
+    //public enum BreadOptions { NineGrainWheat, NineGrainHoneyOat, Italian, ItalianHerbsAndCheese, Flatbread };
+    //public enum CheeseOptions { American, MontereyCheddar, Pepperjack };
+    //public enum ToppingOptions
+    //{
+    //    Avocado, BananaPeppers, Cucumbers, GreenBellPeppers, Jalapenos,
+    //    Lettuce, Olives, Pickles, RedOnion, Spinach, Tomatoes
+    //};
+    //public enum SauceOptions
+    //{
+    //    ChipotleSouthwest, HoneyMustard, LightMayonnaise, RegularMayonnaise,
+    //    Mustard, Oil, Pepper, Ranch, SweetOnion, Vinegar
+    //};
+
+    [Serializable]
+    class PjMenu
+    {
+        public PjMOptions? Operation;
+        public ProjectOptions? Action;        
+        
+        public static IForm<PjMenu> BuildForm()
+        {
+            return new FormBuilder<PjMenu>()
+                    .Message("Welcome to the Project Manager Bot!")
+                    .Build();
+        }
+    };
+
+    
+
+    [Serializable]
+    public class PjMActionsDialog : IDialog<object>
+    {
+        private int count = 1;
+        public async Task StartAsync(IDialogContext context)
+        {
+            context.Wait(MessageReceivedAsync);
+        }
+        public async Task MessageReceivedAsync(IDialogContext context, IAwaitable<Message> argument)
+        {
+            var message = await argument;
+            if (message.Text == "reset")
+            {
+                PromptDialog.Confirm(
+                    context,
+                    AfterResetAsync,
+                    "Are you sure you want to reset the count?",
+                    "Didn't get that!");
+            }
+            else
+            {
+                await context.PostAsync(string.Format("{0}: You said {1}", this.count++, message.Text));
+                context.Wait(MessageReceivedAsync);
+            }
+        }
+        public async Task AfterResetAsync(IDialogContext context, IAwaitable<bool> argument)
+        {
+            var confirm = await argument;
+            if (confirm)
+            {
+                this.count = 1;
+                await context.PostAsync("Reset count.");
+            }
+            else
+            {
+                await context.PostAsync("Did not reset count.");
+            }
+            context.Wait(MessageReceivedAsync);
         }
     }
 }
