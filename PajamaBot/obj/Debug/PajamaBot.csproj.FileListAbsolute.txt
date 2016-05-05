@@ -43,3 +43,8 @@ C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\Chronic.dll
 C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\Microsoft.Bot.Builder.dll
 C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\Autofac.xml
 C:\Users\Alexey\Documents\PajamaBot\PajamaBot\bin\Microsoft.Bot.Builder.xml
+C:\Users\ava\Documents\Visual Studio 2015\Projects\PajamaBot\PajamaBot\bin\Autofac.dll
+C:\Users\ava\Documents\Visual Studio 2015\Projects\PajamaBot\PajamaBot\bin\Chronic.dll
+C:\Users\ava\Documents\Visual Studio 2015\Projects\PajamaBot\PajamaBot\bin\Microsoft.Bot.Builder.dll
+C:\Users\ava\Documents\Visual Studio 2015\Projects\PajamaBot\PajamaBot\bin\Autofac.xml
+C:\Users\ava\Documents\Visual Studio 2015\Projects\PajamaBot\PajamaBot\bin\Microsoft.Bot.Builder.xml

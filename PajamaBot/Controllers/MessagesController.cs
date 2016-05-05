@@ -28,8 +28,14 @@ namespace PajamaBot
             if (message.Type == "Message")
             {
                 // return our reply to the user
-                
-                return await Conversation.SendAsync(message, MakeRootDialog);
+                //return await Conversation.SendAsync(message, MakeRootDialog);
+                var operation = message.GetBotPerUserInConversationData<string>("operation");
+                if (operation == "register_project")
+                {
+                    return await Conversation.SendAsync(message, MakeRootDialog);
+                }
+
+                return await Conversation.SendAsync(message, () => new PjMActionsDialog());
             }
             else
             {
@@ -100,34 +106,34 @@ namespace PajamaBot
             //}
         }
 
-        internal static IDialog<string> MakeRootDialog()
+        internal static IDialog<PjMenu> MakeRootDialog()
         {
-            IDialog<string> joke = Chain
-                .PostToChain()
-                .Select(m => m.Text)
-                .Switch
-                (
-                    Chain.Case
-                    (
-                        new Regex("^chicken"),
-                        (context, text) =>
-                            Chain
-                            .Return("why did the chicken cross the road?")
-                            .PostToUser()
-                            .WaitToBot()
-                            .Select(ignoreUser => "to get to the other side")
-                    ),
-                    Chain.Default<string, IDialog<string>>(
-                        (context, text) =>
-                            Chain
-                            .Return("why don't you like chicken jokes?")
-                    )
-                )
-                .Unwrap()
-                .PostToUser().
-                Loop();
-            return joke;
-            //return Chain.From(() => FormDialog.FromForm(PjMenu.BuildForm));
+            //IDialog<string> joke = Chain
+            //    .PostToChain()
+            //    .Select(m => m.Text)
+            //    .Switch
+            //    (
+            //        Chain.Case
+            //        (
+            //            new Regex("^chicken"),
+            //            (context, text) =>
+            //                Chain
+            //                .Return("why did the chicken cross the road?")
+            //                .PostToUser()
+            //                .WaitToBot()
+            //                .Select(ignoreUser => "to get to the other side")
+            //        ),
+            //        Chain.Default<string, IDialog<string>>(
+            //            (context, text) =>
+            //                Chain
+            //                .Return("why don't you like chicken jokes?")
+            //        )
+            //    )
+            //    .Unwrap()
+            //    .PostToUser().
+            //    Loop();
+            //return joke;
+            return Chain.From(() => FormDialog.FromForm(PjMenu.BuildForm));
         }
 
         private Message HandleSystemMessage(Message message)
@@ -222,7 +228,36 @@ namespace PajamaBot
             }
             else
             {
-                await context.PostAsync(string.Format("{0}: You said {1}", this.count++, message.Text));
+                if (count == 1)
+                {
+                    await context.PostAsync("Hey there!How Can I help you ?1) Register a project 2)Project Actions 3)Change Project Settings 4)Show project info & stats 5) Exit");
+                }
+                else if (count == 2)
+                {
+                    if (message.Text.Contains("1"))
+                    {
+                        context.PerUserInConversationData.SetValue("operation", "register_project");
+                        await context.PostAsync("I ma going to register a project. Launching the wizard...");         
+                    }
+                    else if (message.Text.Contains("2"))
+                    {
+
+                    }
+                    else if (message.Text.Contains("3"))
+                    { }
+                    else if (message.Text.Contains("4"))
+                    { }
+                    else
+                    {
+                    PromptDialog.Confirm(
+                        context,
+                        AfterResetAsync,
+                        "Are you sure you want to exit?",
+                        "Didn't get that!");
+                    }
+                }
+
+                count++;
                 context.Wait(MessageReceivedAsync);
             }
         }
