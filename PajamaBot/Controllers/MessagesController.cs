@@ -29,13 +29,13 @@ namespace PajamaBot
             {
                 // return our reply to the user
                 //return await Conversation.SendAsync(message, MakeRootDialog);
-                var operation = message.GetBotPerUserInConversationData<string>("operation");
-                if (operation == "register_project")
-                {
-                    return await Conversation.SendAsync(message, MakeRootDialog);
-                }
+                //var operation = message.GetBotPerUserInConversationData<string>("operation");
+                //if (operation == "register_project")
+                //{
+                //    return await Conversation.SendAsync(message, MakeRootDialog);
+                //}
 
-                return await Conversation.SendAsync(message, () => new PjMActionsDialog());
+                return await Conversation.SendAsync(message, () => new SimpleAlarmDialog());
             }
             else
             {
